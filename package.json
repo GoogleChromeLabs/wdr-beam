@@ -1,0 +1,30 @@
+{
+  "name": "dcc-uploader",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rimraf ./dist && tsc",
+    "lint": "gts lint",
+    "prepare": "npm run build",
+    "start": "npm run build && node dist/cli.js"
+  },
+  "author": "Michael Solati <mkslt04@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "firebase": "^8.2.6",
+    "fs-extra": "^9.1.0",
+    "glob": "^7.1.6"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.6",
+    "@types/glob": "^7.1.3",
+    "@types/node": "^14.11.2",
+    "gts": "^3.1.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.1.3"
+  },
+  "bin": {
+    "dcc-uploader": "./dist/cli.js"
+  }
+}
