@@ -10,9 +10,12 @@ const imageRegexGroup = /!\[(?<alt>(.*))\]\((?<src>(?!http?).*\.(png|svg|jpg|jpe
 
 export default async (filepath = process.cwd()): Promise<void> => {
   const workingDirectory = getWorkingDirectory(filepath);
-  const outputFolder = path.join(workingDirectory, libName);
+  const outputFolder = path.join(workingDirectory, `${libName}-temp`);
   const mdGlob = path.join(workingDirectory, '!(node_modules)', '**', '*.md');
-  fs.mkdirSync(outputFolder);
+
+  if (!fs.existsSync(outputFolder)) {
+    fs.mkdirSync(outputFolder);
+  }
 
   glob(mdGlob, {}, async (_, files) => {
     // Go through all the files that were found
@@ -41,7 +44,6 @@ export default async (filepath = process.cwd()): Promise<void> => {
 
             // check if image file exists
             if (fs.existsSync(srcPath)) {
-              console.log(`Saving ${srcPath} to ${outputPath}`);
               // fs.createReadStream(srcPath).pipe(
               //   fs.createWriteStream(outputPath)
               // );
