@@ -1,34 +1,41 @@
 import * as glob from 'glob';
 import * as path from 'path';
+import * as process from 'process';
 import * as fs from 'fs';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/storage';
+global.XMLHttpRequest = require('xmlhttprequest-ssl').XMLHttpRequest;
+
+firebase.initializeApp({
+  apiKey: 'AIzaSyCX4cAvGPXxFP8TTJNZLlgQpTKgGKbf4YU',
+  authDomain: 'uploadertest-6243c.firebaseapp.com',
+  projectId: 'uploadertest-6243c',
+  storageBucket: 'uploadertest-6243c.appspot.com',
+  messagingSenderId: '486095045501',
+  appId: '1:486095045501:web:c1d07ade9c4d4e34b18214',
+});
 
 import {getWorkingDirectory} from './utils';
+import {uploadFile} from './upload';
 
-const libName = require('../package.json').name;
-const imageMatchRegex = /!\[(.*)\]\((?!http?).*\\*.(png|svg|jpg|jpeg)\)/g;
-const imageRegexGroup = /!\[(?<alt>(.*))\]\((?<src>(?!http?).*\.(png|svg|jpg|jpeg))\)/;
+const imageMatchRegex = /!\[(.*)\]\((?!http?).*\\*.(png|svg|jpg|jpeg|gif|webp)\)/g;
+const imageRegexGroup = /!\[(?<alt>(.*))\]\((?<src>(?!http?).*\.(png|svg|jpg|jpeg|gif|webp))\)/;
 
 export default async (filepath = process.cwd()): Promise<void> => {
   const workingDirectory = getWorkingDirectory(filepath);
-  const outputFolder = path.join(workingDirectory, `${libName}-temp`);
   const mdGlob = path.join(workingDirectory, '!(node_modules)', '**', '*.md');
 
-  if (!fs.existsSync(outputFolder)) {
-    fs.mkdirSync(outputFolder);
-  }
-
   glob(mdGlob, {}, async (_, files) => {
+    let i = 0;
     // Go through all the files that were found
     for (const file of files) {
-      const markdown = fs.readFileSync(file, 'utf8');
+      let markdown = fs.readFileSync(file, 'utf8');
       const images = markdown.match(imageMatchRegex);
 
       // check if images are in file
       if (images) {
-        console.log(
-          'Extraxting images from:',
-          file.replace(workingDirectory, '')
-        );
+        console.log('Extraxting images from:', file);
         const markdownPath = path.dirname(file);
 
         // go through each image found
@@ -40,17 +47,21 @@ export default async (filepath = process.cwd()): Promise<void> => {
           if (groups && groups.alt && groups.src) {
             const imageFileName = groups.src.split('/').pop() || '';
             const srcPath = path.join(markdownPath, imageFileName);
-            const outputPath = path.join(outputFolder, imageFileName);
 
             // check if image file exists
             if (fs.existsSync(srcPath)) {
-              // fs.createReadStream(srcPath).pipe(
-              //   fs.createWriteStream(outputPath)
-              // );
+              i++;
+              const upload = await uploadFile(srcPath);
+              const shortcode = `{% img src="${upload.src}", alt="${groups.alt}", width="${upload.width}", height="${upload.height}" %}`;
+              markdown = markdown.replace(image, shortcode);
             }
           }
         }
+        console.log(`Updating: ${file}`);
+        fs.writeFileSync(file, markdown, 'utf8');
       }
     }
+    console.log(`Uploaded ${i} file(s)`);
+    process.exit(0); // eslint-disable-line
   });
 };
