@@ -52,7 +52,7 @@ export default async (filepath = process.cwd()): Promise<void> => {
             if (fs.existsSync(srcPath)) {
               i++;
               const upload = await uploadFile(srcPath);
-              const shortcode = `{% img src="${upload.src}", alt="${groups.alt}", width="${upload.width}", height="${upload.height}" %}`;
+              const shortcode = `{% Img src="${upload.src}", alt="${groups.alt}", width="${upload.width}", height="${upload.height}" %}`;
               markdown = markdown.replace(image, shortcode);
             }
           }
