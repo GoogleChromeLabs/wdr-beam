@@ -67,7 +67,10 @@ export const uploadFile = (imgPath: string): Promise<Upload> => {
     .put(image, {
       contentType,
     })
-    .then(() => docRef.set(upload))
+    .then(() => {
+      fs.unlinkSync(imgPath);
+      return docRef.set(upload);
+    })
     .catch(e => console.log(e))
     .then(() => upload);
 };
