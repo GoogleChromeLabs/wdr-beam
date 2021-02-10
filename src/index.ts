@@ -8,12 +8,13 @@ import 'firebase/storage';
 global.XMLHttpRequest = require('xmlhttprequest-ssl').XMLHttpRequest;
 
 firebase.initializeApp({
-  apiKey: 'AIzaSyCX4cAvGPXxFP8TTJNZLlgQpTKgGKbf4YU',
-  authDomain: 'uploadertest-6243c.firebaseapp.com',
-  projectId: 'uploadertest-6243c',
-  storageBucket: 'uploadertest-6243c.appspot.com',
-  messagingSenderId: '486095045501',
-  appId: '1:486095045501:web:c1d07ade9c4d4e34b18214',
+  apiKey: 'AIzaSyBSBTYO-WYjfx_CicY_r0I-5qGoyj2K7hA',
+  authDomain: 'chrome-gcs-uploader.firebaseapp.com',
+  databaseURL: 'https://chrome-gcs-uploader.firebaseio.com',
+  projectId: 'chrome-gcs-uploader',
+  storageBucket: 'chrome-gcs-uploader.appspot.com',
+  messagingSenderId: '561384360906',
+  appId: '1:561384360906:web:e838a6ec0de9369989dd33',
 });
 
 import {getWorkingDirectory} from './utils';
