@@ -21,6 +21,11 @@ declare global {
     token: string;
   };
   export type Domains = 'developer.chrome.com' | 'web.dev';
+  export type ImageCahce = Map<string, Upload>;
+  export type MarkdownResults = {
+    i: number;
+    markdown: string;
+  };
   export type TODO = any; // eslint-disable-line
   export type Upload = {
     date: number;

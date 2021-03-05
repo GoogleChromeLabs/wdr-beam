@@ -39,6 +39,7 @@ const options = program.opts() as DCCUploaderArgs;
 
 for (const arg of requiredArgs) {
   while (!options[arg.key]) {
+    console.log('\n');
     if (arg.options) {
       const i = readlineSync.keyInSelect(arg.options, arg.question, {
         cancel: false,

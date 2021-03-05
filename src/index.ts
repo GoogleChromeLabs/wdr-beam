@@ -11,10 +11,9 @@ global.XMLHttpRequest = require('xmlhttprequest-ssl').XMLHttpRequest;
 
 import {getEnvironments} from './environment';
 import {getWorkingDirectory} from './utils';
-import {uploadFile} from './upload';
-
-const imageMatchRegex = /!\[(.*)\]\((?!http?).*\\*.(png|svg|jpg|jpeg|gif|webp)\)/g;
-const imageRegexGroup = /!\[(?<alt>(.*))\]\((?<src>(?!http?).*\.(png|svg|jpg|jpeg|gif|webp))\)/;
+import {caseHtmlClass} from './regex-cases/html-class';
+import {caseHtml} from './regex-cases/html';
+import {caseMarkdown} from './regex-cases/markdown';
 
 const close = (code: number) => process.exit(code); // eslint-disable-line
 
@@ -43,7 +42,9 @@ export default async ({
       close(1);
     }
   } catch {
-    console.error("Invalid token, we can't authorize you");
+    console.error(
+      "Invalid token, we can't authorize you. Visit https://chrome-gcs-uploader.web.app/cli and try again!"
+    );
     close(1);
   }
 
@@ -60,43 +61,34 @@ export default async ({
   }
 
   glob(mdGlob, {}, async (_, files) => {
-    let i = 0;
+    const ic: ImageCahce = new Map();
     files = files.filter(v => !v.includes('node_modules'));
 
     // Go through all the files that were found
     for (const file of files) {
-      let markdown = fs.readFileSync(file, 'utf8');
-      const images = markdown.match(imageMatchRegex);
+      console.log('\nExtraxting images from:', file);
+      let md = fs.readFileSync(file, 'utf8');
 
-      // check if images are in file
-      if (images) {
-        console.log('Extraxting images from:', file);
-        const markdownPath = path.dirname(file);
+      // Upload HTML with a class attribute
+      const resultHtmlClass = await caseHtmlClass(md, file, domain, uid, ic);
+      md = resultHtmlClass.markdown;
 
-        // go through each image found
-        for (const image of images) {
-          // extract image details
-          const groups = imageRegexGroup.exec(image)?.groups;
+      // Upload HTML without a class attribute
+      const resultHtml = await caseHtml(md, file, domain, uid, ic);
+      md = resultHtml.markdown;
 
-          // ensure all image details exist
-          if (groups && groups.alt && groups.src) {
-            const imageFileName = groups.src.split('/').pop() || '';
-            const srcPath = path.join(markdownPath, imageFileName);
+      // Upload markdown syntax
+      const resultMarkdown = await caseMarkdown(md, file, domain, uid, ic);
+      md = resultMarkdown.markdown;
 
-            // check if image file exists
-            if (fs.existsSync(srcPath)) {
-              i++;
-              const upload = await uploadFile(srcPath, domain, uid);
-              const shortcode = `{% Img src="${upload.src}", alt="${groups.alt}", width="${upload.width}", height="${upload.height}" %}`;
-              markdown = markdown.replace(image, shortcode);
-            }
-          }
-        }
-        console.log(`Updating: ${file}`);
-        fs.writeFileSync(file, markdown, 'utf8');
+      const uploadedFiles = resultHtmlClass.i + resultHtml.i + resultMarkdown.i;
+      if (uploadedFiles > 0) {
+        console.log(`Found ${uploadedFiles} image(s)`);
+        console.log(`Updating: ${file}\n`);
+        fs.writeFileSync(file, md, 'utf8');
       }
     }
-    console.log(`Uploaded ${i} file(s)`);
+    console.log(`Uploaded ${ic.size} file(s)`);
     close(0);
   });
 };
