@@ -27,11 +27,14 @@ program
   .name(packageJson.name)
   .version(packageJson.version)
   .option(
-    '-d, --domain <string>',
+    '-D, --domain <string>',
     'domain of site uploading for, developer.chrome.com or web.dev'
   )
-  .option('-f, --filepath <string>', 'directory to search in', process.cwd())
-  .option('-t, --token <string>', 'auth token');
+  .option('-F, --filepath <string>', 'directory to search in', process.cwd())
+  .option(
+    '-T, --token <string>',
+    'auth token, you can generate one at https://chrome-gcs-uploader.web.app/cli'
+  );
 
 program.parse(process.argv);
 
