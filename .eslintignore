@@ -1,1 +1,4 @@
-build/
+**/*.json
+**/*.js
+dist/
+node_modules/
