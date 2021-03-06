@@ -54,7 +54,7 @@ export default async ({
 
   // Verify folder before we continue
   const verifyFolder = readlineSync.keyInYNStrict(
-    `Uploading files from ${workingDirectory}, is that ok?`
+    `Uploading files from ${workingDirectory} for ${domain}, should we proceed?`
   );
   if (!verifyFolder) {
     close(0);
@@ -84,11 +84,11 @@ export default async ({
       const uploadedFiles = resultHtmlClass.i + resultHtml.i + resultMarkdown.i;
       if (uploadedFiles > 0) {
         console.log(`Found ${uploadedFiles} image(s)`);
-        console.log(`Updating: ${file}\n`);
+        console.log(`Updating: ${file}`);
         fs.writeFileSync(file, md, 'utf8');
       }
     }
-    console.log(`Uploaded ${ic.size} file(s)`);
+    console.log(`\nUploaded ${ic.size} file(s)`);
     close(0);
   });
 };
