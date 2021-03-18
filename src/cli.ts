@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import dccUploader from './index';
+import wdrBeam from './index';
 import {Command} from 'commander';
 import * as readlineSync from 'readline-sync';
 
@@ -23,6 +23,8 @@ const requiredArgs: {
   },
 ];
 
+console.log('Starting Web DevRel Beam');
+
 program
   .name(packageJson.name)
   .version(packageJson.version)
@@ -42,16 +44,17 @@ const options = program.opts() as DCCUploaderArgs;
 
 for (const arg of requiredArgs) {
   while (!options[arg.key]) {
-    console.log('\n');
     if (arg.options) {
       const i = readlineSync.keyInSelect(arg.options, arg.question, {
         cancel: false,
       }) as TODO;
       options[arg.key] = arg.options[i];
+      console.log('\n');
     } else {
       options[arg.key] = readlineSync.question(arg.question) as TODO;
+      console.log('\n');
     }
   }
 }
 
-dccUploader(options);
+wdrBeam(options);

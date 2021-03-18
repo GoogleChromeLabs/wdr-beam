@@ -1,4 +1,4 @@
-# dcc-uploader
+# wdr-beam (Web DevRel Beam)
 
 Are you creating content for [developer.chrome.com](https://developer.chrome.com) or [web.dev](https://web.dev)? Then this package may be for you!
 
@@ -9,7 +9,7 @@ Instead of running to the web based uploader tool for every file you want to add
 ## Installation
 
 ```bash
-npm i -g dcc-uploader
+npm i -g wdr-beam
 ```
 
 ---
@@ -29,7 +29,7 @@ Just inlucde your image in the same folder as the post you're working on, and in
 Then in that folder run the command:
 
 ```bash
-dcc-uploader
+wdr-beam
 ```
 
 This library will find all the images in your markdown, upload them to the CDN, delete them locally, and update your posts markdown to use the `Img` shortcode. What you'll get is this:

@@ -1,5 +1,5 @@
 {
-  "name": "dcc-uploader",
+  "name": "wdr-beam",
   "version": "0.0.0",
   "description": "Tool to upload images for developer.chrome.com and web.dev (made for Google Chrome/Web DevRel)",
   "main": "dist/index.js",
@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MichaelSolati/dcc-uploader.git"
+    "url": "git+https://github.com/MichaelSolati/wdr-beam.git"
   },
   "author": "Michael Solati <mkslt04@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MichaelSolati/dcc-uploader/issues"
+    "url": "https://github.com/MichaelSolati/wdr-beam/issues"
   },
-  "homepage": "https://github.com/MichaelSolati/dcc-uploader",
+  "homepage": "https://github.com/MichaelSolati/wdr-beam",
   "files": [
     "dist/**",
     "CHANGELOG.md",
@@ -51,6 +51,6 @@
     "typescript": "^4.1.3"
   },
   "bin": {
-    "dcc-uploader": "./dist/cli.js"
+    "wdr-beam": "./dist/cli.js"
   }
 }
