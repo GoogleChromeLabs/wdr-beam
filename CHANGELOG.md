@@ -1,3 +1,9 @@
+### 0.2.0 (2021-09-14)
+
+##### Chores
+
+*  update to only upload to one bucket ([d1c68d64](https://github.com/MichaelSolati/wdr-beam/commit/d1c68d6460061f967bff41ee4a27c9fb2d85437e))
+
 ### 0.1.0 (2021-03-18)
 
 ##### Chores
