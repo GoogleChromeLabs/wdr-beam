@@ -26,11 +26,7 @@ const getDimensions = (
   return {height, width};
 };
 
-export const uploadFile = (
-  imgPath: string,
-  domain: Domains,
-  uid: string
-): Promise<Upload> => {
+export const uploadFile = (imgPath: string, uid: string): Promise<Upload> => {
   const collectionRef = firebase.firestore().collection('uploads');
   const storageRef = firebase.storage().ref();
   const docRef = collectionRef.doc();
@@ -41,7 +37,6 @@ export const uploadFile = (
 
   const upload: Upload = {
     date: new Date().getTime(),
-    domain,
     extension: path.extname(imgPath).replace(/^\./, ''),
     height,
     name: path.basename(imgPath),

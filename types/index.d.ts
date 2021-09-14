@@ -16,11 +16,9 @@
 
 declare global {
   export type DCCUploaderArgs = {
-    domain: Domains;
     filepath: string;
     token: string;
   };
-  export type Domains = 'developer.chrome.com' | 'web.dev';
   export type ImageCahce = Map<string, Upload>;
   export type MarkdownResults = {
     i: number;
@@ -29,7 +27,6 @@ declare global {
   export type TODO = any; // eslint-disable-line
   export type Upload = {
     date: number;
-    domain: Domains;
     extension: string;
     height?: number;
     name: string;

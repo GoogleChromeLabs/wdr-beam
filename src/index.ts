@@ -9,7 +9,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 global.XMLHttpRequest = require('xmlhttprequest-ssl').XMLHttpRequest;
 
-import {getEnvironments} from './environment';
+import {environment} from './environment';
 import {getWorkingDirectory} from './utils';
 import {caseHtmlClass} from './regex-cases/html-class';
 import {caseHtml} from './regex-cases/html';
@@ -18,14 +18,12 @@ import {caseMarkdown} from './regex-cases/markdown';
 const close = (code: number) => process.exit(code); // eslint-disable-line
 
 export default async ({
-  domain,
   filepath = process.cwd(),
   token,
 }: DCCUploaderArgs): Promise<void> => {
   let uid: string;
   // Validate domain and set up Firebase
   try {
-    const environment = getEnvironments(domain);
     firebase.initializeApp(environment);
   } catch (e: TODO) {
     console.error(e.message ? e.message : e);
@@ -43,7 +41,7 @@ export default async ({
     }
   } catch {
     console.error(
-      "Invalid token, we can't authorize you. Visit https://chrome-gcs-uploader.web.app/cli and try again!"
+      "Invalid token, we can't authorize you. Visit https://web-dev-uploads.web.app/cli and try again!"
     );
     close(1);
   }
@@ -54,7 +52,7 @@ export default async ({
 
   // Verify folder before we continue
   const verifyFolder = readlineSync.keyInYNStrict(
-    `Uploading files from ${workingDirectory} for ${domain}, should we proceed?`
+    `Uploading files from ${workingDirectory}, should we proceed?`
   );
   if (!verifyFolder) {
     close(0);
@@ -70,15 +68,15 @@ export default async ({
       let md = fs.readFileSync(file, 'utf8');
 
       // Upload HTML with a class attribute
-      const resultHtmlClass = await caseHtmlClass(md, file, domain, uid, ic);
+      const resultHtmlClass = await caseHtmlClass(md, file, uid, ic);
       md = resultHtmlClass.markdown;
 
       // Upload HTML without a class attribute
-      const resultHtml = await caseHtml(md, file, domain, uid, ic);
+      const resultHtml = await caseHtml(md, file, uid, ic);
       md = resultHtml.markdown;
 
       // Upload markdown syntax
-      const resultMarkdown = await caseMarkdown(md, file, domain, uid, ic);
+      const resultMarkdown = await caseMarkdown(md, file, uid, ic);
       md = resultMarkdown.markdown;
 
       const uploadedFiles = resultHtmlClass.i + resultHtml.i + resultMarkdown.i;

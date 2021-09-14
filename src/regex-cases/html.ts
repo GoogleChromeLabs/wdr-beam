@@ -6,7 +6,6 @@ import {uploadFile} from '../upload';
 export const caseHtml = async (
   markdown: string,
   file: string,
-  domain: Domains,
   uid: string,
   imageCache: ImageCahce
 ): Promise<MarkdownResults> => {
@@ -32,7 +31,7 @@ export const caseHtml = async (
         // check if image file exists
         if (fs.existsSync(srcPath)) {
           result.i++;
-          const upload = await uploadFile(srcPath, domain, uid);
+          const upload = await uploadFile(srcPath, uid);
           const shortcode = `{% Img src="${upload.src}", alt="${groups.alt}", width="${upload.width}", height="${upload.height}" %}`;
           result.markdown = result.markdown.replace(image, shortcode);
           imageCache.set(srcPath, upload);

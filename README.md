@@ -51,9 +51,8 @@ The library requires an auth token and a domain, which it will prompt for, or yo
 | Option                    | Description                                                                                                            |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | -V, --version             | output the version number                                                                                              |
-| -D, --domain \<string\>   | domain of site uploading for, developer.chrome.com or web.dev                                                          |
 | -F, --filepath \<string\> | directory to search in (defaults to current directory)                                                                 |
-| -T, --token \<string\>    | auth token, you can generate one at [https://chrome-gcs-uploader.web.app/cli](https://chrome-gcs-uploader.web.app/cli) |
+| -T, --token \<string\>    | auth token, you can generate one at [https://web-dev-uploads.web.app/cli](https://web-dev-uploads.web.app/cli))        |
 | -h, --help                | display help for command                                                                                               |
 ---
 
