@@ -1,6 +1,6 @@
 {
   "name": "wdr-beam",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Tool to upload images for developer.chrome.com and web.dev (made for Google Chrome/Web DevRel)",
   "main": "dist/index.js",
   "scripts": {
