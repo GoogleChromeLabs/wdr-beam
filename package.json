@@ -14,17 +14,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MichaelSolati/wdr-beam.git"
+    "url": "git+https://github.com/GoogleChromeLabs/wdr-beam.git"
   },
-  "author": "Michael Solati <mkslt04@gmail.com>",
-  "license": "MIT",
+  "author": "Michael Solati <michaelsolati@google.com>",
+  "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/MichaelSolati/wdr-beam/issues"
+    "url": "https://github.com/GoogleChromeLabs/wdr-beam/issues"
   },
-  "homepage": "https://github.com/MichaelSolati/wdr-beam",
+  "homepage": "https://github.com/GoogleChromeLabs/wdr-beam",
   "files": [
     "dist/**",
     "CHANGELOG.md",
+    "CONTRIBUTING.md",
     "LICENSE.md",
     "package-lock.json",
     "package.json",

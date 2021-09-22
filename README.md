@@ -52,7 +52,7 @@ The library requires an auth token and a domain, which it will prompt for, or yo
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | -V, --version             | output the version number                                                                                              |
 | -F, --filepath \<string\> | directory to search in (defaults to current directory)                                                                 |
-| -T, --token \<string\>    | auth token, you can generate one at [https://web-dev-uploads.web.app/cli](https://web-dev-uploads.web.app/cli))        |
+| -T, --token \<string\>    | auth token, you can generate one at [https://web-dev-uploads.web.app/cli](https://web-dev-uploads.web.app/cli)         |
 | -h, --help                | display help for command                                                                                               |
 ---
 
